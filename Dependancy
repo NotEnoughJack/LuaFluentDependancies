@@ -1,1 +1,67 @@
 
+local Players = game:GetService("Players")
+local localPlayer = Players.LocalPlayer
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "WatermarkGUI"
+screenGui.ResetOnSpawn = false
+screenGui.Parent = localPlayer:WaitForChild("PlayerGui")
+
+local watermark = Instance.new("TextLabel")
+watermark.Name = "Watermark"
+watermark.Parent = screenGui
+watermark.Text = "Made by notenoughjack"
+watermark.TextColor3 = Color3.fromRGB(255, 255, 255)
+watermark.TextSize = 14
+watermark.TextScaled = false
+watermark.Font = Enum.Font.GothamBold
+watermark.TextXAlignment = Enum.TextXAlignment.Left
+watermark.TextYAlignment = Enum.TextYAlignment.Center
+
+watermark.Position = UDim2.new(0.01, 0, 1, -40)
+watermark.Size = UDim2.new(0, 200, 0, 30)
+
+watermark.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+watermark.BackgroundTransparency = 0.7
+watermark.BorderSizePixel = 0
+watermark.BorderColor3 = Color3.fromRGB(255, 255, 255)
+
+local stroke = Instance.new("UIStroke")
+stroke.Name = "Stroke"
+stroke.Parent = watermark
+stroke.Color = Color3.fromRGB(100, 100, 100)
+stroke.Thickness = 1
+stroke.Transparency = 0.5
+
+watermark.Visible = true
+watermark.BackgroundTransparency = 1
+watermark.TextTransparency = 1
+
+local function fadeIn()
+    for i = 0, 10 do
+        local alpha = i / 10
+        watermark.BackgroundTransparency = 0.7 - (alpha * 0.7)
+        watermark.TextTransparency = 1 - alpha
+        wait(0.1)
+    end
+end
+
+local function fadeOut()
+    for i = 10, 0, -1 do
+        local alpha = i / 10
+        watermark.BackgroundTransparency = 0.7 - (alpha * 0.7)
+        watermark.TextTransparency = 1 - alpha
+        wait(0.1)
+    end
+end
+
+fadeIn()
+
+while true do
+    wait(30)
+    fadeOut()
+    wait(1)
+    fadeIn()
+end
+game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Copied", Text = "discord copied to clipboard", Duration = 3})
+setclipboard("https://discord.gg/YZgbVMfp9z")
